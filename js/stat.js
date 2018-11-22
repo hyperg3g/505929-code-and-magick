@@ -21,6 +21,10 @@ var TextLinePosition2 = {
   x: 120,
   y: 60
 };
+var CloudPosition = {
+  x: 100,
+  y: 10
+};
 var COLUMN_GAP = 50;
 var COLUMN_WIDTH = 40;
 var SUP_RANGE = 100;
@@ -58,6 +62,7 @@ var getColumnHeightArray = function (times) {
 var renderChart = function (ctx, names, times) {
   var columnHeights = getColumnHeightArray(times);
   var fillColor;
+  var x = ChartPosition.x;
 
   for (var i = 0; i < times.length; i++) {
     if (names[i] === 'Вы') {
@@ -67,15 +72,15 @@ var renderChart = function (ctx, names, times) {
       fillColor = 'hsl(240, ' + randomSaturate + '%, 50%';
     }
     ctx.fillStyle = fillColor;
-    ctx.fillRect(ChartPosition.x, ChartPosition.y, COLUMN_WIDTH, -columnHeights[i]);
-    renderText(names[i], ChartPosition.x, ChartPosition.y + NAME_GAP, ctx);
-    renderText(Math.trunc(times[i]), ChartPosition.x, ChartPosition.y - columnHeights[i] - SCORE_GAP, ctx);
-    ChartPosition.x += COLUMN_GAP + COLUMN_WIDTH;
+    ctx.fillRect(x, ChartPosition.y, COLUMN_WIDTH, -columnHeights[i]);
+    renderText(names[i], x, ChartPosition.y + NAME_GAP, ctx);
+    renderText(Math.trunc(times[i]), x, ChartPosition.y - columnHeights[i] - SCORE_GAP, ctx);
+    x += COLUMN_GAP + COLUMN_WIDTH;
   }
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, 100, 10);
+  renderCloud(ctx, CloudPosition.x, CloudPosition.y);
   renderText(TEXT_LINE1, TextLinePosition1.x, TextLinePosition1.y, ctx);
   renderText(TEXT_LINE2, TextLinePosition2.x, TextLinePosition2.y, ctx);
   renderChart(ctx, names, times);
