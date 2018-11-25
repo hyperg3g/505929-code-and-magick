@@ -69,7 +69,7 @@ var renderChart = function (ctx, names, times) {
       fillColor = 'red';
     } else {
       var randomSaturate = Math.floor(Math.random() * (SUP_RANGE - 1)) + 1;
-      fillColor = 'hsl(240, ' + randomSaturate + '%, 50%';
+      fillColor = 'hsl(240, ' + randomSaturate + '%, 50%)';
     }
     ctx.fillStyle = fillColor;
     ctx.fillRect(x, ChartPosition.y, COLUMN_WIDTH, -columnHeights[i]);
