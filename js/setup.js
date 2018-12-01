@@ -90,15 +90,21 @@ var wizardsEyes = document.querySelector('.wizard-eyes');
 var wizardFireball = document.querySelector('.setup-fireball-wrap');
 
 wizardCoat.addEventListener('click', function () {
-  wizardCoat.style.fill = getRandomElementFromArray(colorsRgb);
+  var newColor = getRandomElementFromArray(colorsRgb);
+  wizardCoat.style.fill = newColor;
+  document.getElementsByName('coat-color')[0].value = newColor;
 });
 
 wizardsEyes.addEventListener('click', function () {
-  wizardsEyes.style.fill = getRandomElementFromArray(colorsNames);
+  var newColor = getRandomElementFromArray(colorsNames);
+  wizardsEyes.style.fill = newColor;
+  document.getElementsByName('eyes-color')[0].value = newColor;
 });
 
 wizardFireball.addEventListener('click', function () {
-  wizardFireball.style.backgroundColor = getRandomElementFromArray(colorsHex);
+  var newColor = getRandomElementFromArray(colorsHex);
+  wizardFireball.style.backgroundColor = newColor;
+  document.getElementsByName('fireball-color')[0].value = newColor;
 });
 
 document.querySelector('.setup-similar-list').appendChild(createWizardsNode());
