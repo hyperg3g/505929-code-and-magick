@@ -9,6 +9,11 @@ var colorsRgb = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)'
 var colorsNames = ['black', 'red', 'blue', 'yellow', 'green'];
 var colorsHex = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
+var SetupDefaultCoords = {
+  x: 0,
+  y: 0
+};
+
 var getRandomElementFromArray = function (array) {
   var randomNumber = Math.floor(Math.random() * array.length);
   return array[randomNumber];
@@ -57,11 +62,17 @@ var setupEscPress = function (evt) {
 
 var openPopup = function () {
   setup.classList.remove('hidden');
+  SetupDefaultCoords = {
+    x: setup.offsetLeft,
+    y: setup.offsetTop
+  };
   document.addEventListener('keydown', setupEscPress);
 };
 
 var closePopup = function () {
   setup.classList.add('hidden');
+  setup.style.top = SetupDefaultCoords.y + 'px';
+  setup.style.left = SetupDefaultCoords.x + 'px';
   document.removeEventListener('keydown', setupEscPress);
 };
 
