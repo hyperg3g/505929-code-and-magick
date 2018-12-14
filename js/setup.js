@@ -4,6 +4,8 @@
   var ESC_KEYCODE = 27;
   var ENTER_KEYCODE = 13;
   var colorsHex = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+  var colorsRgb = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
+  var colorsNames = ['black', 'red', 'blue', 'yellow', 'green'];
 
   var SetupDefaultCoords = {
     x: 0,
@@ -60,15 +62,16 @@
   var wizardCoat = document.querySelector('.wizard-coat');
   var wizardsEyes = document.querySelector('.wizard-eyes');
   var wizardFireball = document.querySelector('.setup-fireball-wrap');
+  var form = document.querySelector('.setup-wizard-form');
 
   wizardCoat.addEventListener('click', function () {
-    var newColor = window.utilities.getRandomElementFromArray(window.wizards.colorsRgb);
+    var newColor = window.utilities.getRandomElementFromArray(colorsRgb);
     wizardCoat.style.fill = newColor;
     document.getElementsByName('coat-color')[0].value = newColor;
   });
 
   wizardsEyes.addEventListener('click', function () {
-    var newColor = window.utilities.getRandomElementFromArray(window.wizards.colorsNames);
+    var newColor = window.utilities.getRandomElementFromArray(colorsNames);
     wizardsEyes.style.fill = newColor;
     document.getElementsByName('eyes-color')[0].value = newColor;
   });
@@ -79,6 +82,13 @@
     document.getElementsByName('fireball-color')[0].value = newColor;
   });
 
-  document.querySelector('.setup-similar-list').appendChild(window.wizards.createWizardsNode());
-  document.querySelector('.setup-similar').classList.remove('hidden');
+  var errorHandle = function (message) {
+    alert('Что-то пошло не так (' + message + ')');
+  }
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), closePopup, errorHandle);
+  });
+
 })();

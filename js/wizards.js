@@ -2,45 +2,39 @@
 
 (function () {
   var WIZARDS_AMOUNT = 4;
-  var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var surnames = ['де Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницая', 'Нионго', 'Ирвинг'];
-  var colorsRgb = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var colorsNames = ['black', 'red', 'blue', 'yellow', 'green'];
 
-  var generateWizard = function () {
-    var fullName = window.utilities.getRandomElementFromArray(names) + ' '
-      + window.utilities.getRandomElementFromArray(surnames);
-    var coatColor = window.utilities.getRandomElementFromArray(colorsRgb);
-    var eyesColor = window.utilities.getRandomElementFromArray(colorsNames);
-    return {name: fullName, coatColor: coatColor, eyesColor: eyesColor};
+  var similarListElement = document.querySelector('.setup-similar-list');
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
+
+  var renderWizard = function (wizard) {
+    var wizardTemp = similarWizardTemplate.cloneNode(true);
+
+    wizardTemp.querySelector('.setup-similar-label').textContent = wizard.name;
+    wizardTemp.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+
+    return wizardTemp;
   };
 
-  var getWizardsArray = function (amount) {
-    var wizardsArray = new Array(amount);
-    for (var i = 0; i < amount; i++) {
-      wizardsArray[i] = generateWizard();
-    }
-    return wizardsArray;
-  };
-
-  var wizards = getWizardsArray(WIZARDS_AMOUNT);
-  var wizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('div');
-
-  var createWizardsNode = function () {
+  var successHandle = function (wizards) {
     var fragment = document.createDocumentFragment();
+
     for (var i = 0; i < WIZARDS_AMOUNT; i++) {
-      var similarWizard = wizardTemplate.cloneNode(true);
-      similarWizard.querySelector('.setup-similar-label').innerHTML = wizards[i].name;
-      similarWizard.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
-      similarWizard.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
-      fragment.appendChild(similarWizard);
+      fragment.appendChild(renderWizard(wizards[i]));
     }
-    return fragment;
+
+    document.querySelector('.setup-similar-list').appendChild(fragment);
+    document.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  window.wizards = {
-    createWizardsNode: createWizardsNode,
-    colorsNames: colorsNames,
-    colorsRgb: colorsRgb
-  };
+  var errorHandle = function (message) {
+    var errorNode = document.createElement('div');
+
+    errorNode.innerText = 'Здесь должны быть маги, но тут Error: ' + message;
+    errorNode.style.margin = '0 auto';
+
+    document.querySelector('.setup-similar-list').appendChild(errorNode);
+    document.querySelector('.setup-similar').classList.remove('hidden');
+  }
+
+  window.backend.load(successHandle, errorHandle);
 })();
