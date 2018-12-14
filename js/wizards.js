@@ -3,7 +3,6 @@
 (function () {
   var WIZARDS_AMOUNT = 4;
 
-  var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content;
 
   var renderWizard = function (wizard) {
@@ -34,7 +33,7 @@
 
     document.querySelector('.setup-similar-list').appendChild(errorNode);
     document.querySelector('.setup-similar').classList.remove('hidden');
-  }
+  };
 
   window.backend.load(successHandle, errorHandle);
 })();

@@ -83,8 +83,8 @@
   });
 
   var errorHandle = function (message) {
-    alert('Что-то пошло не так (' + message + ')');
-  }
+    alert('Что-то пошло не так (' + message + ')'); // eslint-disable-line no-alert
+  };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
